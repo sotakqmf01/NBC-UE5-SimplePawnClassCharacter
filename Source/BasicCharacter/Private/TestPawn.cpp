@@ -48,6 +48,12 @@ ATestPawn::ATestPawn()
 
 	MouseSensitivity = 0.75f;
 
+	//FRotator ControlRotation = GetController()->GetControlRotation();
+	//FRotator ControlRotationYaw(0.0f, ControlRotation.Yaw, 0.0f);
+
+	//FVector ForwardVector = FRotationMatrix(ControlRotationYaw).GetUnitAxis(EAxis::X);
+	//FVector RightVetor = FRotationMatrix(ControlRotationYaw).GetUnitAxis(EAxis::Y);
+
 }
 
 void ATestPawn::BeginPlay()

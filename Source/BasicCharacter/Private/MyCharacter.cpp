@@ -22,7 +22,7 @@ AMyCharacter::AMyCharacter()
 	SpringArmComp->TargetArmLength = 300.0f;
 	//SpringArmComp->SetRelativeRotation(FRotator(30.0f, 0.0f, 0.0f));
 	SpringArmComp->SetRelativeLocation(FVector(0.0f, 0.0f, 150.0f));
-	SpringArmComp->bUsePawnControlRotation = true;		// Character°¡ ¾Æ´Ï¶ó [PlayerControllerÀÇ È¸Àü]À» µû¸£°Ú´Ù
+	SpringArmComp->bUsePawnControlRotation = true;		// Characterê°€ ì•„ë‹ˆë¼ [PlayerControllerì˜ íšŒì „]ì„ ë”°ë¥´ê² ë‹¤
 
 	CameraComp->SetRelativeRotation(FRotator(-20.0f, 0.0f, 0.0f));
 	CameraComp->bUsePawnControlRotation = false;
@@ -58,23 +58,23 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	{
 		if (AMyPlayerController* PlayerController = Cast<AMyPlayerController>(GetController()))
 		{
-			// ÀÌµ¿
+			// ì´ë™
 			if (PlayerController->MoveAction)
 			{
 				EnhancedInput->BindAction(PlayerController->MoveAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 			}
-			// Á¡ÇÁ
+			// ì í”„
 			if (PlayerController->JumpAction)
 			{
 				EnhancedInput->BindAction(PlayerController->JumpAction, ETriggerEvent::Triggered, this, &AMyCharacter::StartJump);
 				EnhancedInput->BindAction(PlayerController->JumpAction, ETriggerEvent::Completed, this, &AMyCharacter::StopJump);
 			}
-			// ¸¶¿ì½º
+			// ë§ˆìš°ìŠ¤
 			if (PlayerController->LookAction)
 			{
 				EnhancedInput->BindAction(PlayerController->LookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);
 			}
-			// ´Ş¸®±â
+			// ë‹¬ë¦¬ê¸°
 			if (PlayerController->SprintAction)
 			{
 				EnhancedInput->BindAction(PlayerController->SprintAction, ETriggerEvent::Triggered, this, &AMyCharacter::StartSprint);
@@ -84,7 +84,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	}
 }
 
-// FInputActionValue´Â UEnhancedInputComponent ¾È¿¡ ÀÖÀ½
+// FInputActionValueëŠ” UEnhancedInputComponent ì•ˆì— ìˆìŒ
 void AMyCharacter::Move(const FInputActionValue& value)
 {
 	if (!Controller) return;
@@ -93,7 +93,8 @@ void AMyCharacter::Move(const FInputActionValue& value)
 
 	if (!FMath::IsNearlyZero(MoveInput.X))
 	{
-		// ³»ºÎÀûÀ¸·Î PawnMovementComponent¿¡ ±¸ÇöµÇ¾î ÀÖ´Â ÇÔ¼ö »ç¿ë
+		// ë‚´ë¶€ì ìœ¼ë¡œ PawnMovementComponentì— êµ¬í˜„ë˜ì–´ ìˆëŠ” í•¨ìˆ˜ ì‚¬ìš©
+		// ìºë¦­í„°ë¥¼ World ê¸°ì¤€ìœ¼ë¡œ ì´ë™ì‹œí‚´
 		AddMovementInput(GetActorForwardVector(), MoveInput.X);
 	}
 
@@ -107,7 +108,7 @@ void AMyCharacter::StartJump(const FInputActionValue& value)
 {
 	if (value.Get<bool>())
 	{
-		// ³»ºÎÀûÀ¸·Î CharacterMovementComponent¿¡ ±¸ÇöµÇ¾î ÀÖ´Â ÇÔ¼ö »ç¿ë
+		// ë‚´ë¶€ì ìœ¼ë¡œ CharacterMovementComponentì— êµ¬í˜„ë˜ì–´ ìˆëŠ” í•¨ìˆ˜ ì‚¬ìš©
 		Jump();
 
 		// Actor's current movement mode (walking, falling, etc).
@@ -116,7 +117,7 @@ void AMyCharacter::StartJump(const FInputActionValue& value)
 		//	- flying : Flying, ignoring the effects of gravity.
 		//	- swimming : Swimming through a fluid volume, under the effects of gravity and buoyancy.
 		//	- custom : User - defined custom movement mode, including many possible sub - modes.
-		// Å°¸¦ ´­·¶°í + Ä³¸¯ÅÍÀÇ »óÅÂ°¡ MOVE_FallingÀÌ ¾Æ´Ò ¶§
+		// í‚¤ë¥¼ ëˆŒë €ê³  + ìºë¦­í„°ì˜ ìƒíƒœê°€ MOVE_Fallingì´ ì•„ë‹ ë•Œ
 		if (bPressedJump && (GetCharacterMovement()->MovementMode != MOVE_Falling))
 		{
 			JumpCount++;
@@ -129,7 +130,7 @@ void AMyCharacter::StopJump(const FInputActionValue& value)
 {
 	if (!value.Get<bool>())
 	{
-		// ³»ºÎÀûÀ¸·Î CharacterMovementComponent¿¡ ±¸ÇöµÇ¾î ÀÖ´Â ÇÔ¼ö »ç¿ë
+		// ë‚´ë¶€ì ìœ¼ë¡œ CharacterMovementComponentì— êµ¬í˜„ë˜ì–´ ìˆëŠ” í•¨ìˆ˜ ì‚¬ìš©
 		StopJumping();
 		
 		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("STOP JUMP"));
@@ -140,7 +141,7 @@ void AMyCharacter::Look(const FInputActionValue& value)
 {
 	FVector2D LookInput = value.Get<FVector2D>();
 
-	// ³»ºÎÀûÀ¸·Î PlayerController¿¡ ±¸ÇöµÇ¾î ÀÖ´Â ÇÔ¼ö »ç¿ë
+	// ë‚´ë¶€ì ìœ¼ë¡œ PlayerControllerì— êµ¬í˜„ë˜ì–´ ìˆëŠ” í•¨ìˆ˜ ì‚¬ìš©
 	AddControllerYawInput(LookInput.X * MouseSensitivity);
 	AddControllerPitchInput(LookInput.Y * MouseSensitivity);
 }

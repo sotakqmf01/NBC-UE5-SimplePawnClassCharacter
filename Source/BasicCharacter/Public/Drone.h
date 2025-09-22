@@ -44,12 +44,12 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	// blockµÇ¾úÀ» ¶§ Hit ÀÌº¥Æ® ¹ß»ı
+	// blockë˜ì—ˆì„ ë•Œ Hit ì´ë²¤íŠ¸ ë°œìƒ
 	virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp,
 		bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImperse, const FHitResult& Hit) override;
-	// overlapµÇ¾úÀ» ¶§ BeginOverlap ÀÌº¥Æ® ¹ß»ı
+	// overlapë˜ì—ˆì„ ë•Œ BeginOverlap ì´ë²¤íŠ¸ ë°œìƒ
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
-	// overlapÀÌ ³¡³µÀ» ¶§ EndOverlap ÀÌº¥Æ® ¹ß»ı
+	// overlapì´ ëë‚¬ì„ ë•Œ EndOverlap ì´ë²¤íŠ¸ ë°œìƒ
 	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -66,4 +66,6 @@ protected:
 	void PitchRotation(const FInputActionValue& value);
 	UFUNCTION()
 	void RollRotation(const FInputActionValue& value);
+
+	//void test();
 };
