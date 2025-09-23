@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MyPlayerController.h"
@@ -23,13 +23,13 @@ void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// PlayerController¿Í ¿¬°áµÇ¾î ÀÖ´Â ÇÃ·¹ÀÌ¾î °¡Á®¿À±â
+	// PlayerControllerì™€ ì—°ê²°ë˜ì–´ ìˆëŠ” í”Œë ˆì´ì–´ ê°€ì ¸ì˜¤ê¸°
 	if (ULocalPlayer* LocalPlayer = GetLocalPlayer())
 	{
-		// ÇØ´ç ÇÃ·¹ÀÌ¾îÀÇ IMC¸¦ °ü¸®ÇÏ´Â SubsystemÀ» °¡Á®¿À±â
+		// í•´ë‹¹ í”Œë ˆì´ì–´ì˜ IMCë¥¼ ê´€ë¦¬í•˜ëŠ” Subsystemì„ ê°€ì ¸ì˜¤ê¸°
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
-			// IMC¸¦ ÇÒ´ç
+			// IMCë¥¼ í• ë‹¹
 			if (InputMappingContext)
 			{
 				Subsystem->AddMappingContext(InputMappingContext, 0);
@@ -45,7 +45,7 @@ void AMyPlayerController::SetupInputComponent()
 
 	if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(InputComponent))
 	{
-		// Tab Å°
+		// Tab í‚¤
 		if (TapKeyAction)
 		{
 			EnhancedInput->BindAction(TapKeyAction, ETriggerEvent::Started, this, &AMyPlayerController::ChangeIMC);
@@ -77,7 +77,7 @@ void AMyPlayerController::ChangeIMC(const FInputActionValue& value)
 			}
 
 			// UEnhancedInputLocalPlayerSubsystem -> GetPlayerInput() -> UEnhancedPlayerInput -> GetEnhancedActionMappings()
-			// => ÇöÀç Àû¿ëµÈ IMCµéÀÌ ´ã±ä TArray<FEnhancedActionKeyMapping>¸¦ ¾òÀ» ¼ö ÀÖÀ½
+			// => í˜„ì¬ ì ìš©ëœ IMCë“¤ì´ ë‹´ê¸´ TArray<FEnhancedActionKeyMapping>ë¥¼ ì–»ì„ ìˆ˜ ìˆìŒ
 		}
 	}
 }

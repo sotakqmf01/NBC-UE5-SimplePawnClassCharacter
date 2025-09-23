@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TestPawn.h"
 #include "Components/ArrowComponent.h"
@@ -27,7 +27,7 @@ ATestPawn::ATestPawn()
 
 	CapsuleComp->SetCapsuleHalfHeight(95.0f);
 	CapsuleComp->SetCapsuleRadius(37.0f);
-	
+
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshAsset(TEXT("/Game/Resources/Characters/Meshes/SKM_Manny.SKM_Manny"));
 	if (MeshAsset.Succeeded())
 	{
@@ -59,7 +59,7 @@ ATestPawn::ATestPawn()
 void ATestPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void ATestPawn::Tick(float DeltaTime)
@@ -76,12 +76,12 @@ void ATestPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	{
 		if (AMyPlayerController* PlayerController = Cast<AMyPlayerController>(GetController()))
 		{
-			// ÀÌµ¿
+			// ì´ë™
 			if (PlayerController->MoveAction)
 			{
 				EnhancedInput->BindAction(PlayerController->MoveAction, ETriggerEvent::Triggered, this, &ATestPawn::Move);
 			}
-			// È¸Àü
+			// íšŒì „
 			if (PlayerController->LookAction)
 			{
 				EnhancedInput->BindAction(PlayerController->LookAction, ETriggerEvent::Triggered, this, &ATestPawn::Look);
@@ -101,7 +101,7 @@ void ATestPawn::Move(const FInputActionValue& value)
 
 	if (!FMath::IsNearlyZero(MoveInput.X))
 	{
-		// GetActorForwardVector()´Â world ±âÁØ FVector¸¦ ¹ÝÈ¯
+		// GetActorForwardVector()ëŠ” world ê¸°ì¤€ FVectorë¥¼ ë°˜í™˜
 		//FVector ForwardV = GetActorForwardVector() ;
 		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Blue, FString::Printf(TEXT("ForwardV : (%f, %f, %f)"), ForwardV.X, ForwardV.Y, ForwardV.Z));
 		//AddActorWorldOffset(ForwardV * MoveInput.X);
@@ -127,20 +127,20 @@ void ATestPawn::Look(const FInputActionValue& value)
 
 	if (!FMath::IsNearlyZero(LookInput.Y))
 	{
-		// [SpringArmComp->bUsePawnControlRotation = true]ÀÎ °æ¿ì
-		//  - PawnÀ» µ¹·Áµµ SpringArmComp°¡ µ¹¾Æ°¡Áö ¾ÊÀ½ => Ä«¸Þ¶óµµ °íÁ¤
-		//  - ¸¶¿ì½º¸¦ ¿òÁ÷ÀÌ¸é Ä«¸Þ¶ó´Â °¡¸¸È÷ ÀÖ°í Pawn¸¸ È¸ÀüÇÏ°Ô µÊ
-		//  - => ¸¶¿ì½º¸¦ ¿òÁ÷ÀÌ´Ù º¸¸é PawnÀÇ Á¤¸éÀÌ Ä«¸Þ¶ó¸¦ ÇâÇÒ ¼öµµ ÀÖ°í, 
-		//        PawnÀÌ Ä«¸Þ¶ó ¾Þ±Û ¹ÛÀ¸·Î ³ª°¡Áö´Â °æ¿ìµµ ÀÖ´Ù
+		// [SpringArmComp->bUsePawnControlRotation = true]ì¸ ê²½ìš°
+		//  - Pawnì„ ëŒë ¤ë„ SpringArmCompê°€ ëŒì•„ê°€ì§€ ì•ŠìŒ => ì¹´ë©”ë¼ë„ ê³ ì •
+		//  - ë§ˆìš°ìŠ¤ë¥¼ ì›€ì§ì´ë©´ ì¹´ë©”ë¼ëŠ” ê°€ë§Œížˆ ìžˆê³  Pawnë§Œ íšŒì „í•˜ê²Œ ë¨
+		//  - => ë§ˆìš°ìŠ¤ë¥¼ ì›€ì§ì´ë‹¤ ë³´ë©´ Pawnì˜ ì •ë©´ì´ ì¹´ë©”ë¼ë¥¼ í–¥í•  ìˆ˜ë„ ìžˆê³ , 
+		//        Pawnì´ ì¹´ë©”ë¼ ì•µê¸€ ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ëŠ” ê²½ìš°ë„ ìžˆë‹¤
 		//    
-		// [SpringArmComp->bUsePawnControlRotation = false]ÀÎ °æ¿ì
-		//  - PawnÀ» µ¹·Á¹ö¸®¸é SpringArmCompµµ PawnÀ» µû¶ó¼­ µ¹¾Æ°¨ => [Ä«¸Þ¶ó°¡ Ç×»ó PawnÀÇ µÚÅë¼ö¸¦ º½]
-		//  - ¸¶¿ì½º¸¦ ³»¸®¸é PawnÀÌ ´©¿ö¹ö¸²
-		//  - À§¿¡ Move() ÇÔ¼ö°¡ [Ä³¸¯ÅÍ ±âÁØÀ¸·Î ¿òÁ÷]ÀÌµµ·Ï ±¸ÇöµÇ¾î ÀÖ°í + PawnÀÌ È¸ÀüÇÔ + ¹°¸® ÀÛ¿ëÀÌ ¾øÀ½
-		//  - => ÇÏ´ÃÀ» º¸°í ¾ÕÀ¸·Î °¡¸é Ä³¸¯ÅÍ°¡ ÇÏ´Ã·Î ¿òÁ÷ÀÓ
+		// [SpringArmComp->bUsePawnControlRotation = false]ì¸ ê²½ìš°
+		//  - Pawnì„ ëŒë ¤ë²„ë¦¬ë©´ SpringArmCompë„ Pawnì„ ë”°ë¼ì„œ ëŒì•„ê° => [ì¹´ë©”ë¼ê°€ í•­ìƒ Pawnì˜ ë’¤í†µìˆ˜ë¥¼ ë´„]
+		//  - ë§ˆìš°ìŠ¤ë¥¼ ë‚´ë¦¬ë©´ Pawnì´ ëˆ„ì›Œë²„ë¦¼
+		//  - ìœ„ì— Move() í•¨ìˆ˜ê°€ [ìºë¦­í„° ê¸°ì¤€ìœ¼ë¡œ ì›€ì§]ì´ë„ë¡ êµ¬í˜„ë˜ì–´ ìžˆê³  + Pawnì´ íšŒì „í•¨ + ë¬¼ë¦¬ ìž‘ìš©ì´ ì—†ìŒ
+		//  - => í•˜ëŠ˜ì„ ë³´ê³  ì•žìœ¼ë¡œ ê°€ë©´ ìºë¦­í„°ê°€ í•˜ëŠ˜ë¡œ ì›€ì§ìž„
 		//AddActorLocalRotation(FRotator(1.0f, 0.0f, 0.0f) * -1.0f * LookInput.Y * MouseSensitivity);
 
-		// È¸Àü °¢µµ¿¡ Á¦ÇÑÀÌ ¾øÀ¸´Ï±î ÀÌ»óÇÔ
+		// íšŒì „ ê°ë„ì— ì œí•œì´ ì—†ìœ¼ë‹ˆê¹Œ ì´ìƒí•¨
 		//SpringArmComp->AddLocalRotation(FRotator(1.0f, 0.0f, 0.0f) * -1.0f * LookInput.Y * MouseSensitivity);
 
 		FRotator NewRotation = SpringArmComp->GetRelativeRotation();

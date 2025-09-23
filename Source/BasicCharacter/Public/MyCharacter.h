@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,7 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
-struct FInputActionValue;	// IA¿¡¼­ ¼³Á¤ÇÑ Value TypeÀ» ¹Ş±â À§ÇÑ ±¸Á¶Ã¼
+struct FInputActionValue;	// IAì—ì„œ ì„¤ì •í•œ Value Typeì„ ë°›ê¸° ìœ„í•œ êµ¬ì¡°ì²´
 
 UCLASS()
 class BASICCHARACTER_API AMyCharacter : public ACharacter
